@@ -25,67 +25,61 @@ export const createElement = ({
 };
 
 export const createStyle = () => {
-    createElement({
+    const style = `
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      .container {
+        padding: 20px;
+      }
+      .movies {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+      }
+      .movie {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+      }
+      .movie__image {
+        width: 100%;
+        object-fit: cover;
+      }
+      .search {
+        margin-bottom: 30px;
+      }
+      .search__label-input {
+        display: block;
+        margin-bottom: 7px;
+      }
+      .search__input {
+        display: block;
+        padding: 10px 15px;
+        max-width: 400px;
+        width: 100%;
+        border: 1px solid lightgrey;
+        border-radius: 4px;
+        margin-bottom: 10px;
+      }
+      .search__label-checkbox {
+        display: block;
+        font-size: 12px;
+        margin-top: -17px;
+        margin-left: 25px;
+      }`;
+
+    const { head } = document;
+    const { type, attrs, container } = {
         type: 'style',
-        attrs: {
-            innerText: `
-    * {
-    box-sizing: border-box;
-}
+        attrs: { innerText: style },
+        container: head,
+    };
 
-body {
-    margin: 0;
-}
-
-.container {
-    padding: 20px;
-}
-
-.movies {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-}
-
-.movie {
-    display: flex;
-    align-content: center;
-    justify-content: center;
-}
-
-.movie__image {
-    width: 100%;
-    object-fit: cover;
-}
-
-.search {
-    margin-bottom: 30px;
-}
-
-.search__label-input {
-    display: block;
-    margin-bottom: 7px;
-}
-
-.search__input {
-    display: block;
-    padding: 10px 15px;
-    max-width: 400px;
-    width: 100%;
-    border: 1px solid lightgrey;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-
-.search__label-checkbox {
-    display: block;
-    font-size: 12px;
-    margin-top: -17px;
-    margin-left: 25px;
-}`
-        },
-        container: document.head
-    });
+    const el = createElement({ type, attrs, container });
 };
 
 export const createMarkup = () => {
