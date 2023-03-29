@@ -1,15 +1,8 @@
-export let moviesList = null;
-export let inputSearch = null;
+export const moviesList = null;
+export const inputSearch = null;
 export let triggerMode = false;
 
-export const createElement = ({
-    type,
-    attrs,
-    container = null,
-    position = 'append',
-    evt = null,
-    handler = null
-}) => {
+export const createElement = ({ type, attrs = {}, container, position = 'append', evt, handler }) => {
     const el = document.createElement(type);
 
     Object.keys(attrs).forEach((key) => {
@@ -29,60 +22,61 @@ export const createStyle = () => {
         type: 'style',
         attrs: {
             innerText: `
-    * {
-    box-sizing: border-box;
-}
+        * {
+          box-sizing: border-box;
+        }
 
-body {
-    margin: 0;
-}
+        body {
+          margin: 0;
+        }
 
-.container {
-    padding: 20px;
-}
+        .container {
+          padding: 20px;
+        }
 
-.movies {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-}
+        .movies {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          gap: 20px;
+        }
 
-.movie {
-    display: flex;
-    align-content: center;
-    justify-content: center;
-}
+        .movie {
+          display: flex;
+          align-content: center;
+          justify-content: center;
+        }
 
-.movie__image {
-    width: 100%;
-    object-fit: cover;
-}
+        .movie__image {
+          width: 100%;
+          object-fit: cover;
+        }
 
-.search {
-    margin-bottom: 30px;
-}
+        .search {
+          margin-bottom: 30px;
+        }
 
-.search__label-input {
-    display: block;
-    margin-bottom: 7px;
-}
+        .search__label-input {
+          display: block;
+          margin-bottom: 7px;
+        }
 
-.search__input {
-    display: block;
-    padding: 10px 15px;
-    max-width: 400px;
-    width: 100%;
-    border: 1px solid lightgrey;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
+        .search__input {
+          display: block;
+          padding: 10px 15px;
+          max-width: 400px;
+          width: 100%;
+          border: 1px solid lightgrey;
+          border-radius: 4px;
+          margin-bottom: 10px;
+        }
 
-.search__label-checkbox {
-    display: block;
-    font-size: 12px;
-    margin-top: -17px;
-    margin-left: 25px;
-}`
+        .search__label-checkbox {
+          display: block;
+          font-size: 12px;
+          margin-top: -17px;
+          margin-left: 25px;
+        }
+      `
         },
         container: document.head
     });
@@ -98,7 +92,7 @@ export const createMarkup = () => {
 
     createElement({
         type: 'h1',
-        attrs: { innerText: 'Додаток для пошуку фільмів' },
+        attrs: { innerText: 'Приложение для поиска фильмов' },
         container
     });
 
@@ -113,7 +107,7 @@ export const createMarkup = () => {
         attrs: {
             class: 'search__label-input',
             for: 'search',
-            innerText: 'Пошук фільмів'
+            innerText: 'Поиск фильмов'
         },
         container: searchBox
     });
@@ -123,7 +117,7 @@ export const createMarkup = () => {
         attrs: {
             class: 'search__input',
             id: 'search',
-            placeholder: 'Почніть вводити текст...'
+            placeholder: 'Начните вводить текст...'
         },
         container: searchBox
     });
@@ -146,7 +140,7 @@ export const createMarkup = () => {
         attrs: {
             class: 'search__label-checkbox',
             for: 'checkbox',
-            innerText: 'Добавляти фільми до існуючого списку'
+            innerText: 'Добавить фильм к списку'
         },
         container: searchBox
     });
