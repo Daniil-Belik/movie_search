@@ -50,7 +50,7 @@ export const appInit = (url) => {
     createMarkup();
     createStyle();
 
-    siteUrl = url || 'http://www.omdbapi.com/'
+    siteUrl = url || 'https://www.omdbapi.com/'
 
     inputSearch.addEventListener('keyup', inputSearchHandler)
 }
