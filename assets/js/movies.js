@@ -8,8 +8,7 @@ import {
     triggerMode,
 } from './dom.js';
 
-const siteUrl = 'http://www.omdbapi.com/';
-
+let siteUrl = null;
 let searchLast = '';
 
 const getData = (url) => {
@@ -44,8 +43,11 @@ const inputSearchHandler = debounce((e) => {
     searchLast = searchString;
 }, 2000);
 
-export const appInit = () => {
+export const appInit = (url) => {
     createMarkup();
     createStyle();
-    inputSearch.addEventListener('keyup', inputSearchHandler);
-};
+
+    siteUrl = url || 'http://www.omdbapi.com/'
+
+    inputSearch.addEventListener('keyup', inputSearchHandler)
+}
