@@ -5,43 +5,46 @@ import {
     createStyle,
     inputSearch,
     moviesList,
-    triggerMode,
+    triggerMode
 } from './dom.js';
 
 let siteUrl = null;
-let searchLast = '';
+let searchLast = ' ';
 
-const getData = (url) => {
-    return fetch(url)
-        .then((res) => {
-            if (!res.ok) throw Error('Сервер вернул неправильный статус');
-            return res.json();
-        })
-        .then((json) => {
-            if (!json || !json.Search) throw Error('Сервер вернул неправильный ответ');
-            return json.Search;
-        })
-        .catch((err) => console.error(err));
-};
+const getData = (url) => fetch(url)
+    .then((res) => res.json())
+    .then((json) => {
 
-const debounce = (cb, delayMs) => {
-    let timerId = null;
-    return (...args) => {
-        clearTimeout(timerId);
-        timerId = setTimeout(() => cb(...args), delayMs);
+        if (!json || !json.Search) throw Error('Сервер повернув не правильну відповідь.')
+
+        return json.Search;
+    });
+
+const debounce = (() => {
+    let timer = null;
+
+    return (cb, ms) => {
+        if (timer !== null) clearTimeout(timer);
+        timer = setTimeout(cb, ms);
     };
-};
+})();
 
-const inputSearchHandler = debounce((e) => {
-    const searchString = e.target.value.trim();
-    if (searchString.length > 3 && searchString !== searchLast) {
-        clearMovieMarkup(moviesList);
-        getData(`${siteUrl}?apikey=18b8609f&s=${searchString}`)
-            .then((movies) => movies.forEach((movie) => addMovieToList(movie)))
-            .catch((err) => console.error(err));
-    }
-    searchLast = searchString;
-}, 2000);
+const inputSearchHandler = (e) => {
+    debounce(() => {
+        const searchString = e.target.value.trim();
+
+        if (searchString && searchString.length > 3 && searchString !== searchLast) {
+
+            if (!triggerMode) clearMovieMarkup(moviesList);
+
+            getData(`${siteUrl}?apikey=18b8609f&s=${searchString}`)
+                .then((movies) => movies.forEach((movie) => addMovieToList(movie)))
+                .catch((err) => console.error(err));
+        }
+
+        searchLast = searchString;
+    }, 2000);
+};
 
 export const appInit = (url) => {
     createMarkup();
