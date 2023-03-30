@@ -15,7 +15,7 @@ const getData = (url) => fetch(url)
     .then((res) => res.json())
     .then((json) => {
 
-        if (!json || !json.Search) throw Error('Сервер вернул не правильный ответ.')
+        if (!json || !json.Search) throw Error('Сервер вернул неправильный ответ.')
 
         return json.Search;
     });
