@@ -3,29 +3,29 @@ export let inputSearch = null;
 export let triggerMode = false;
 
 export const createElement = ({
-    type,
-    attrs,
-    container = null,
-    position = 'append',
-    evt = null,
-    handler = null
+  type,
+  attrs,
+  container = null,
+  position = 'append',
+  evt = null,
+  handler = null
 }) => {
-    const el = document.createElement(type);
+  const el = document.createElement(type);
 
-    Object.keys(attrs).forEach((key) => {
-        if (key !== 'innerText') el.setAttribute(key, attrs[key]);
-        else el.innerHTML = attrs[key];
-    });
+  Object.keys(attrs).forEach((key) => {
+    if (key !== 'innerText') el.setAttribute(key, attrs[key]);
+    else el.innerHTML = attrs[key];
+  });
 
-    if (container && position === 'append') container.append(el);
-    if (container && position === 'prepend') container.prepend(el);
-    if (evt && handler && typeof handler === 'function') el.addEventListener(evt, handler);
+  if (container && position === 'append') container.append(el);
+  if (container && position === 'prepend') container.prepend(el);
+  if (evt && handler && typeof handler === 'function') el.addEventListener(evt, handler);
 
-    return el;
+  return el;
 };
 
 export const createStyle = () => {
-    const style = `
+  const style = `
       * {
         box-sizing: border-box;
       }
@@ -72,102 +72,102 @@ export const createStyle = () => {
         margin-left: 25px;
       }`;
 
-    const { head } = document;
-    const { type, attrs, container } = {
-        type: 'style',
-        attrs: { innerText: style },
-        container: head,
-    };
+  const { head } = document;
+  const { type, attrs, container } = {
+    type: 'style',
+    attrs: { innerText: style },
+    container: head,
+  };
 
-    const el = createElement({ type, attrs, container });
+  const el = createElement({ type, attrs, container });
 };
 
 export const createMarkup = () => {
-    const container = createElement({
-        type: 'div',
-        attrs: { class: 'container' },
-        container: document.body,
-        position: 'prepend'
-    });
+  const container = createElement({
+    type: 'div',
+    attrs: { class: 'container' },
+    container: document.body,
+    position: 'prepend'
+  });
 
-    createElement({
-        type: 'h1',
-        attrs: { innerText: 'Приложение для поиска фильмов' },
-        container
-    });
+  createElement({
+    type: 'h1',
+    attrs: { innerText: 'Приложение для поиска фильмов' },
+    container
+  });
 
-    const searchBox = createElement({
-        type: 'div',
-        attrs: { class: 'search' },
-        container
-    });
+  const searchBox = createElement({
+    type: 'div',
+    attrs: { class: 'search' },
+    container
+  });
 
-    createElement({
-        type: 'label',
-        attrs: {
-            class: 'search__label-input',
-            for: 'search',
-            innerText: 'Поиск фильмов'
-        },
-        container: searchBox
-    });
+  createElement({
+    type: 'label',
+    attrs: {
+      class: 'search__label-input',
+      for: 'search',
+      innerText: 'Поиск фильмов'
+    },
+    container: searchBox
+  });
 
-    inputSearch = createElement({
-        type: 'input',
-        attrs: {
-            class: 'search__input',
-            id: 'search',
-            placeholder: 'Начните вводить текст...'
-        },
-        container: searchBox
-    });
+  inputSearch = createElement({
+    type: 'input',
+    attrs: {
+      class: 'search__input',
+      id: 'search',
+      placeholder: 'Начните вводить текст...'
+    },
+    container: searchBox
+  });
 
-    createElement({
-        type: 'input',
-        attrs: {
-            class: 'search__checkbox',
-            id: 'checkbox',
-            type: 'checkbox'
-        },
-        container: searchBox,
-        position: 'append',
-        evt: 'click',
-        handler: () => triggerMode = !triggerMode
-    });
+  createElement({
+    type: 'input',
+    attrs: {
+      class: 'search__checkbox',
+      id: 'checkbox',
+      type: 'checkbox'
+    },
+    container: searchBox,
+    position: 'append',
+    evt: 'click',
+    handler: () => triggerMode = !triggerMode
+  });
 
-    createElement({
-        type: 'label',
-        attrs: {
-            class: 'search__label-checkbox',
-            for: 'checkbox',
-            innerText: 'Добавить фильм к списку'
-        },
-        container: searchBox
-    });
+  createElement({
+    type: 'label',
+    attrs: {
+      class: 'search__label-checkbox',
+      for: 'checkbox',
+      innerText: 'Добавить фильм к списку'
+    },
+    container: searchBox
+  });
 
-    moviesList = createElement({
-        type: 'div',
-        attrs: { class: 'movies' },
-        container
-    });
+  moviesList = createElement({
+    type: 'div',
+    attrs: { class: 'movies' },
+    container
+  });
 };
 
 export const addMovieToList = (movie) => {
-    const item = createElement({
-        type: 'div',
-        attrs: { class: 'movie' },
-        container: moviesList
-    });
+  const item = createElement({
+    type: 'div',
+    attrs: { class: 'movie' },
+    container: moviesList
+  });
 
-    createElement({
-        type: 'img',
-        attrs: {
-            src: /^(http|https):\/\//i.test(movie.Poster) ? movie.Poster : 'assets/image/no-image.jpg',
-            class: 'movie__image',
-            alt: movie.Title,
-            title: movie.Title
-        }, container: item
-    });
+  createElement({
+    type: 'img',
+    attrs: {
+      src: /^(http|https):\/\//i.test(movie.Poster) ? movie.Poster : 'assets/image/no-image.jpg',
+      class: 'movie__image',
+      alt: movie.Title,
+      title: movie.Title
+    }, container: item
+  });
 };
 
 export const clearMovieMarkup = (el) => el && (el.innerHTML = '');

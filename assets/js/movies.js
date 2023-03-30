@@ -15,7 +15,7 @@ const getData = (url) => fetch(url)
     .then((res) => res.json())
     .then((json) => {
 
-        if (!json || !json.Search) throw Error('Сервер повернув не правильну відповідь.')
+        if (!json || !json.Search) throw Error('Сервер вернул не правильный ответ.')
 
         return json.Search;
     });
@@ -37,7 +37,7 @@ const inputSearchHandler = (e) => {
 
             if (!triggerMode) clearMovieMarkup(moviesList);
 
-            getData(`${siteUrl}?apikey=18b8609f&s=${searchString}`)
+            getData(`https://www.omdbapi.com/?apikey=807ce5ba&s=${searchString}`)
                 .then((movies) => movies.forEach((movie) => addMovieToList(movie)))
                 .catch((err) => console.error(err));
         }
