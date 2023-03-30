@@ -5,6 +5,7 @@ import {
     createStyle,
     inputSearch,
     moviesList,
+    triggerMode,
 } from './dom.js';
 
 const siteUrl = 'http://www.omdbapi.com/';
