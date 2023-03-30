@@ -9,18 +9,21 @@ import {
 } from './dom.js';
 
 const siteUrl = 'http://www.omdbapi.com/';
-const debounceDelayMs = 2000;
 
-const getData = (url) => fetch(url)
-    .then((res) => {
-        if (!res.ok) throw Error('Сервер вернул неправильный статус');
-        return res.json();
-    })
-    .then((json) => {
-        if (!json || !json.Search) throw Error('Сервер вернул неправильный ответ');
-        return json.Search;
-    })
-    .catch((err) => console.error(err));
+let searchLast = '';
+
+const getData = (url) => {
+    return fetch(url)
+        .then((res) => {
+            if (!res.ok) throw Error('Сервер вернул неправильный статус');
+            return res.json();
+        })
+        .then((json) => {
+            if (!json || !json.Search) throw Error('Сервер вернул неправильный ответ');
+            return json.Search;
+        })
+        .catch((err) => console.error(err));
+};
 
 const debounce = (cb, delayMs) => {
     let timerId = null;
@@ -32,13 +35,14 @@ const debounce = (cb, delayMs) => {
 
 const inputSearchHandler = debounce((e) => {
     const searchString = e.target.value.trim();
-    if (searchString.length > 3) {
-        if (!triggerMode) clearMovieMarkup(moviesList);
+    if (searchString.length > 3 && searchString !== searchLast) {
+        clearMovieMarkup(moviesList);
         getData(`${siteUrl}?apikey=18b8609f&s=${searchString}`)
             .then((movies) => movies.forEach((movie) => addMovieToList(movie)))
             .catch((err) => console.error(err));
     }
-}, debounceDelayMs);
+    searchLast = searchString;
+}, 2000);
 
 export const appInit = () => {
     createMarkup();
